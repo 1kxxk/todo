@@ -29,6 +29,9 @@ const TodoList = () => {
         })
         setTodos(updatedTodos)
       };
+      const handleDelete = (id) => {
+        setTodos((todos)=>todos.filter((todo)=>id !== todo.id))
+      };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -43,6 +46,9 @@ const TodoList = () => {
             {todo.text}
             <button onClick={()=>handleCompleted(todo.id)}>
               {todo.completed?'취소하기':'완료하기'}
+            </button>
+            <button onClick={()=>handleDelete(todo.id)}>
+              삭제하기
             </button>
         </li>
     ))}
