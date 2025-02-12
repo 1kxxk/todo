@@ -13,8 +13,9 @@ const MainContainer = styled.main`
     min-height: 100vh;
     min-width: 100vh;
 `
-const MainContent = styled.main`
+const MainContent = styled.div`
     max-width: 768px;
     margin: 0 auto;
+    padding: 1rem;
 `
 export default RootLayout
