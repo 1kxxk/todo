@@ -1,7 +1,6 @@
 import TodoForm from './TodoForm';
-import TodoList from '../TodoList';
+import TodoList from './TodoList';
 import styled from 'styled-components';
-import TodoDashbord from './TodoDashbord';
 
 const TodoContainer = () => {
   return (

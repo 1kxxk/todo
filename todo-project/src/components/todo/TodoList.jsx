@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import TodoItem from './todo/TodoItem';
+import TodoItem from './TodoItem';
 import { useContext } from 'react';
-import TodoContext from '../context/TodoContext';
+import {TodoContext} from '../../context/TodoContext';
 
 const TodoList = () => {
   const {todos} = useContext(TodoContext)

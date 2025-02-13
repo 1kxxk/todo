@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import TodoContext from '../../context/TodoContext'
+import {TodoContext} from '../../context/TodoContext'
 
 const TodoProvider = ({children}) => {
     const TODOS = [
@@ -34,7 +34,7 @@ const TodoProvider = ({children}) => {
           setTodos((todos)=>todos.filter((todo)=>id !== todo.id))
         };
   return (
-    <TodoContext.Provider value={{todos, handleSubmit, handleCompleted, handleDelete}}>{children}</TodoContext.Provider>
+    <TodoContext.Provider value={{todos, text, setText, handleSubmit, handleCompleted, handleDelete}}>{children}</TodoContext.Provider>
   )
 }
 

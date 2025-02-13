@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import TodoContext from '../../context/TodoContext'
+import {TodoContext} from '../../context/TodoContext'
 
 const TodoItem = ({todo}) => {
   const {handleCompleted, handleDelete} = useContext(TodoContext)

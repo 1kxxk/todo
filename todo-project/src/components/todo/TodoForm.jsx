@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { ActionButton } from './TodoItem'
-import TodoContext from '../../context/TodoContext'
+import {TodoContext} from '../../context/TodoContext'
 
 const TodoForm = () => {
   const {handleSubmit, text, setText} = useContext(TodoContext)
