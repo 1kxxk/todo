@@ -1,8 +1,18 @@
 import { ClipboardCheck, LaptopMinimal, Video } from 'lucide-react'
-import React from 'react'
+import { useContext } from 'react'
+import { Link, useSearchParams } from 'react-router'
 import styled from 'styled-components'
+import { TodoContext } from '../../context/TodoContext'
 
 const TodoDashbord = () => {
+  const {todos} = useContext(TodoContext)
+  const [searchParams] = useSearchParams()
+
+  const all = todos.length
+  const completed = todos.filter((todo)=>todo.completed).length
+  const pening = all - completed;
+  
+  const selectedFilter = searchParams.get('filter')
   return (
     <TodoDashbordSection>
       <TodoDashbordHeader>
@@ -10,32 +20,32 @@ const TodoDashbord = () => {
       </TodoDashbordHeader>
       <TodoDashbordCardList>
         <TodoDashbordCardWrapper $flex={2}>
-          <TodoDashbordCard>
+          <TodoDashbordCard to='/' $selected={!selectedFilter}>
             <div>
             <ClipboardCheck/>
             </div>
             <TodoDashbordCardContent>
-              16 <br /> <span>All Tasks</span>
+              {all} <br /> <span>All Tasks</span>
             </TodoDashbordCardContent>
           </TodoDashbordCard>
         </TodoDashbordCardWrapper>
         <TodoDashbordCardWrapper $flex={1}>
-          <TodoDashbordCard $backgroundcolor='#582be6'>
+          <TodoDashbordCard to='?filter=completed' $selected={selectedFilter === 'completed'} $backgroundcolor='#582be6'>
             <div>
             <LaptopMinimal/>
             </div>
             <TodoDashbordCardContent>
-            5 <br /> <span>Completed Tasks</span> 
+            {completed} <br /> <span>Completed Tasks</span> 
             </TodoDashbordCardContent>
           </TodoDashbordCard>
         </TodoDashbordCardWrapper>
         <TodoDashbordCardWrapper $flex={1}>
-          <TodoDashbordCard $backgroundcolor='#242424'>
+          <TodoDashbordCard to='?filter=pending' $selected={selectedFilter === 'pending'} $backgroundcolor='#242424'>
             <div>
             <Video/>
             </div>
             <TodoDashbordCardContent>
-              11 <br /> <span>Todo Tasks</span>
+              {pening} <br /> <span>Todo Tasks</span>
             </TodoDashbordCardContent>
           </TodoDashbordCard>
         </TodoDashbordCardWrapper>
@@ -64,7 +74,7 @@ const TodoDashbordCardWrapper = styled.li`
   flex:${({$flex=1})=>$flex};
 `
 
-const TodoDashbordCard = styled.button`
+const TodoDashbordCard = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -75,6 +85,7 @@ const TodoDashbordCard = styled.button`
   padding: 1rem;
   border-radius: 1rem;
   cursor: pointer;
+  text-decoration: ${({$selected})=>($selected?'underline':'none')};
 `
 
 const TodoDashbordCardContent = styled.p`
