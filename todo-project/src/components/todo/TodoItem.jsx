@@ -15,7 +15,7 @@ const TodoItem = ({todo}) => {
     <TodoItemsWrapper>
           <TodoItemLink to={`/${todo.id}`} $todo={todo}>{todo.text}</TodoItemLink>
           <TodoItemActions>
-          <ActionButton onClick={()=>handleCompleted(todo.id)}
+          <ActionButton onClick={()=>handleCompleted(todo.id, todo.completed)}
             $backgroundColor={todo.completed ? '#242424' : '#582be6'}>
             {todo.completed?'취소하기':'완료하기'}
           </ActionButton>

@@ -1,10 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {TodoContext} from '../../context/TodoContext'
-import { TODOS } from '../../constans/sameple-todos'
+import { todoClient } from '../../lib/todoClient'
 
 const TodoProvider = ({children}) => {
-        const [todos, setTodos] = useState(TODOS)
+        const [todos, setTodos] = useState([])
         const [text, setText] = useState('')
+
+        const getTodos = async () => {
+          const {data} = await todoClient.get('/')
+          setTodos(data)
+        }
+
+        const addTodos = async (text) => {
+          const {data} = await todoClient.post('/', {
+            text,
+            completed: false,
+          })
+          await getTodos()
+          return data
+        }
+
         const handleSubmit = (e) => {
           e.preventDefault()
           if (!text.trim()) {
@@ -13,15 +28,25 @@ const TodoProvider = ({children}) => {
           setTodos([{id:crypto.randomUUID(), text:text}, ...todos])
           setText('')
         }
-        const handleCompleted = (id) => {
-          const updatedTodos = todos.map((todo)=>{
-            return id === todo.id ? {...todo, completed: !todo.completed} : todo
+
+        const handleCompleted = async (id, currentCompleted) => {
+          const {data} = await todoClient.patch(`/${id}`,{
+            completed: !currentCompleted,
           })
-          setTodos(updatedTodos)
+          await getTodos()
+          return data
         };
-        const handleDelete = (id) => {
-          setTodos((todos)=>todos.filter((todo)=>id !== todo.id))
+
+        const handleDelete = async (id) => {
+          const {data} = await todoClient.delete(`/${id}`)
+          await getTodos()
+          return data
         };
+
+        useEffect(()=>{
+          getTodos()
+        },[])
+        
   return (
     <TodoContext.Provider value={{todos, text, setText, handleSubmit, handleCompleted, handleDelete}}>{children}</TodoContext.Provider>
   )
